@@ -1,6 +1,8 @@
 #![feature(alloc)]
 #![feature(const_fn)]
 #![feature(nll)]
+#![feature(use_nested_groups)]
+#![feature(match_default_bindings)]
 #![cfg_attr(target_arch = "riscv", feature(match_default_bindings))]
 #![no_std]
 

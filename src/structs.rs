@@ -64,14 +64,16 @@ pub struct Str32(pub [u8; 32]);
 
 impl AsRef<str> for Str256 {
     fn as_ref(&self) -> &str {
-        let len = self.0.iter().enumerate().find(|(_, &b)| b == 0).unwrap().0;
+        let zero : &u8 = &0;
+        let len = self.0.iter().enumerate().find(|(_, &b)| b == zero).unwrap().0;
         str::from_utf8(&self.0[0..len]).unwrap()
     }
 }
 
 impl AsRef<str> for Str32 {
     fn as_ref(&self) -> &str {
-        let len = self.0.iter().enumerate().find(|(_, &b)| b == 0).unwrap().0;
+        let zero : &u8 = &0;
+        let len = self.0.iter().enumerate().find(|(_, &b)| b == zero).unwrap().0;
         str::from_utf8(&self.0[0..len]).unwrap()
     }
 }

@@ -1,5 +1,15 @@
 # SimpleFileSystem
 
+## Compile
+
+cargo build --features="std"
+
+## Run
+
+unzip: cargo run --bin mksfs unzip path user-riscv.img --features="std" RUST_BACKTRACE=1
+
+## Build
+
 [![Build Status](https://travis-ci.org/wangrunji0408/SimpleFileSystem-Rust.svg?branch=master)](https://travis-ci.org/wangrunji0408/SimpleFileSystem-Rust)
 
 A Rust implementation for SFS in [ucore_os_lab](https://github.com/chyyuu/ucore_os_lab) lab8.

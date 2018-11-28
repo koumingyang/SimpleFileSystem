@@ -7,11 +7,12 @@ use std::path::Path;
 use std::mem::uninitialized;
 use simple_filesystem::*;
 
-fn main() -> Result<()> {
+fn main(){
     let args: Vec<_> = env::args().collect();
     let cmd = &args[1];
     let dir_path = Path::new(&args[2]);
     let img_path = Path::new(&args[3]);
+    println!("cmd: {}, dir_path: {:?}, img_path: {:?}", cmd, dir_path, img_path);
     match cmd.as_str() {
         "zip" => zip(dir_path, img_path),
         "unzip" => unzip(dir_path, img_path),
@@ -19,7 +20,7 @@ fn main() -> Result<()> {
             println!("USAGE: <zip|unzip> <PATH> <IMG>");
             panic!("Invalid command: {}", cmd);
         }
-    }
+    };
 }
 
 fn zip(path: &Path, img_path: &Path) -> Result<()> {
@@ -59,16 +60,22 @@ fn zip_dir(path: &Path, inode: INodePtr) -> Result<()> {
 }
 
 fn unzip(path: &Path, img_path: &Path) -> Result<()> {
+    println!("unzip");
     let img = fs::File::open(img_path)?;
+    println!("p1");
     let sfs = SimpleFileSystem::open(Box::new(img)).expect("Failed to open sfs");
+    println!("p2");
     let inode = sfs.root_inode();
+    println!("p3");
     fs::create_dir(&path)?;
+    println!("init succeed");
     unzip_dir(path, inode)
 }
 
 fn unzip_dir(path: &Path, inode: INodePtr) -> Result<()> {
     let files = inode.borrow().list().expect("Failed to list files from INode");
     for name in files.iter().skip(2) {
+        println!("Name: {}", name);
         let inode = inode.borrow().lookup(name.as_str()).expect("Failed to lookup");
         let mut path = path.to_path_buf();
         path.push(name);
